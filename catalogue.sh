@@ -9,6 +9,9 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+SCRIPT_DIR=$PWD
+MONGODB_HOST=mongodb.sivadevops.site
+
 if [ $USERID -ne 0 ] ;
 then 
     echo -e "$R Please run this script with root user $N" | tee -a $LOG_FILE
@@ -53,17 +56,20 @@ VALIDATE $? "Downloading catalogue code"
 cd /app 
 VALIDATE $? "Moving to app directory"
 
-unzip /tmp/catalogue.zip
+rm -rf /app/*
+VALIDATE $? "Removing existing code"
+
+unzip /tmp/catalogue.zip &>>$LOGS_FILE
 VALIDATE $? "Uzip catalogue code"
 
-npm install 
+npm install &>>$LOGS_FILE
 VALIDATE $? "Installing dependencies"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Created systemctl service"
 
 systemctl daemon-reload
-systemctl enable catalogue
+systemctl enable catalogue &>>$LOGS_FILE
 systemctl start catalogue
 VALIDATE $? "Starting and enabling catalogue"
 
