@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash 
 
-USERID=$(date -u)
-LOGS_FOLDER="/var/log/shell-roboshop"
-LOG_FILE="$LOGS_FOLDER/$0.log"
+USERID=$(id -u)
+LOGS_DIR="/var/log/shell-roboshop"
+LOG_FILE="$LOGS_DIR/$0.log"
 
 R="\e[31m"
 G="\e[32m"
@@ -15,14 +15,17 @@ then
     exit 1
 fi
 
+mkdir -p $LOGS_DIR
+
 VALIDATE(){
     if [ $1 -ne 0 ] ;
-    then
+    then 
         echo -e "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else
         echo -e "$2...$G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
+
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo 
 VALIDATE $? "Copying mongo repo"
