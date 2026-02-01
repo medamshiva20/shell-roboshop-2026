@@ -23,17 +23,17 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y 
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling NodeJS Default version"
 
-dnf module enable nodejs:20 -y 
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling NodeJS 20"
 
-dnf install nodejs -y 
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Install NodeJS"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 VALIDATE $? "Creating system user"
 
-mkdir /app
+mkdir /app &>>$LOG_FILE
 VALIDATE $? "Creating app directory"
