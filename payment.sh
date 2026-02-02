@@ -3,6 +3,7 @@
 USERID=$(id -u)
 LOGS_DIR="/var/log/shell-roboshop"
 LOG_FILE="$LOGS_DIR/$0.log"
+SCRIPT_DIR=$PWD
 
 R="\e[31m"
 G="\e[32m"
