@@ -36,7 +36,7 @@ VALIDATE $? "Disabling NodeJS Default version"
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling NodeJS 20"
 
-dnf install nodejs -y 
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Install NodeJS"
 
 id roboshop &>>$LOG_FILE
@@ -51,7 +51,7 @@ fi
 mkdir -p /app
 VALIDATE "Creating app directory"
 
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>>$LOGS_FILE
+curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading user code"
 
 cd /app
@@ -60,7 +60,7 @@ VALIDATE $? "Moving to app directory"
 rm -rf /app/*
 VALIDATE $? "Removing existing code"
 
-unzip /tmp/user.zip &>>$LOGS_FILE
+unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATE $? "Uzip user code"
 
 npm install &>>$LOG_FILE
