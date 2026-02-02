@@ -59,6 +59,9 @@ VALIDATE $? "Uzip payment code"
 pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
+cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
+VALIDATE $? "Created systemctl service"
+
 systemctl daemon-reload
 systemctl enable paymen &>>$LOG_FILE
 systemctl start payment
