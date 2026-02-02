@@ -3,6 +3,8 @@
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOG_FILE="$LOGS_FOLDER/$0.log"
+SCRIPT_DIR=$PWD
+MONGODB_HOST=mongodb.sivadevops.site
 
 R="\e[31m"
 G="\e[32m"
@@ -66,5 +68,10 @@ VALIDATE $? "Uzip user code"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+VALIDATE $? "Created systemctl service"
 
-
+systemctl daemon-reload 
+systemctl enable user &>>$LOG_FILE
+systemctl start user
+VALIDATE $? "Starting and enabling user"
